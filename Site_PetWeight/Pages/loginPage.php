@@ -48,7 +48,7 @@
                                     </div>
                                 </form>
                             </div>
-                        <p href="#">Créer un compte</p>
+                        <a href="registration.php">Créer un compte</p>
                     </div>
                 </div>
             </div><!--fin div col s2 m6-->

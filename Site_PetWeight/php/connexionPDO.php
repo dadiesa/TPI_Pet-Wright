@@ -13,7 +13,7 @@ class connexionPDO
 
     function __construct()
     {
-        $this->bdd = new PDO('mysql:host=localhost;dbname=db_petweight;charset=utf8','Admin','Admin');
+        $this->bdd = new PDO('mysql:host=localhost;dbname=db_petweight;charset=utf8','root','');
     }
 
     /**
@@ -39,4 +39,5 @@ class connexionPDO
         $data = $this->bdd->prepare($query);
         $data->execute();
     }
+
 }

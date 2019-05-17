@@ -72,10 +72,18 @@ div#livre {
     background-color: rgba(255,255,255,0.4);
 }
 
-.tess{
-
-
+.footer-fixed {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    right: 0;
+    left: 0;
 }
 
+.header-fixed{
+    bottom: 0;
+    width: 100%;
+    right: 0;
+    left: 0;
 
-
+}

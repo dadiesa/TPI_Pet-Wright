@@ -7,21 +7,31 @@
  */
 
 session_start();
-$login = $_POST['Pseudo'];
+$firstName = $_POST['firstName'];
+$LasName = $_POST['LastName'];
+$Email = $_POST['Email'];
 $pwd = $_POST['Password'];
 $pwdCheck = $_POST['PasswordValid'];
+if (isset($_POST['hideDeath'])){ $hideDeath = "0";}
+else $hideDeath = "1";
+
 
 if($pwd == $pwdCheck) {
 
     $pwdHash = password_hash($_POST['Password'], PASSWORD_DEFAULT);
 }
+else
+$pwdHash = "";
 
 //Appel de la classs pour le PDO
 include "connexionPDO.php";
-$insert = "INSERT INTO t_user (usePseudo,usePassword,useAdminOrNot,useRegisterDate,useBookProposition,useNbrNote) VALUES ('$login','$pwdHash','0' ,NULL, NULL ,NULL )";
-$allUser = "SELECT usePseudo FROM t_user";
+$insert = "INSERT INTO t_user (idUser, useFirstName, useLastName, useEmail, usePassword, useHideDeath) 
+           VALUES (NULL, '$firstName', '$LasName', '$Email', '$pwdHash', '$hideDeath')";
+$allUser = "SELECT useEmail FROM t_user";
 $co = new connexionPDO();
 $getUsers = $co->executeQuerySelect($allUser);
+
+echo $insert;
 
 ?>
 <!DOCTYPE html>
@@ -65,23 +75,24 @@ $getUsers = $co->executeQuerySelect($allUser);
     <div class="row">
         <div class="col s2 m3">
             <?php
-            //Parcour tous les utilisateur existants
+            //Parcour tous les utilisateurs existants
             $userexist = false;
             if($pwd == $pwdCheck){
                 foreach($getUsers as $users)
                 {
                     //Vérifie si l'utilisateur existe déjà
-                    if($login == $users['usePseudo'])
+                    if($Email == $users['useEmail'])
                     {
                         $userexist = true;
-                        echo "<h4>Ce nom d'utilisateur est déja utilisé. Veuillez en choisir un autre</h4>";
+                        echo "<h4>Cet email est déja utilisé. Veuillez en choisir un autre</h4>";
                         break;
                     }
                 }
                 //Si l'utilisateur existe pas il est créé
                 if ($userexist == false){
-                        echo "<h4>L'utilisateur " . $login . " à bien été créé</h4>";
-                        //$co->executeQuery($insert);
+                        echo "<h4>L'utilisateur " . $firstName . " à bien été créé</h4>";
+                        $co->executeQuery($insert);
+                        header("Location: ../Pages/myPets.php");
                 }
             }
             else{
