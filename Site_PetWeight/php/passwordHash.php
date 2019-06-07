@@ -1,4 +1,7 @@
 <?php
+
+//Cette page n'est utilisée qua au début du projet quant le hash automatique n'est pas encore codé
+
 include "../php/connexionPDO.php";
 
 $requete = 'SELECT t_user.usePassword FROM t_user';

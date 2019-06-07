@@ -43,7 +43,7 @@ $getMyPets = $exeRequest->executeQuerySelect($getMyPet);
                                         }//end foreach
                                         ?>
                                     </select>
-                                    <input type="date" name="weightDate" id="weightDate">
+                                    <input type="date" name="weightDate" id="weightDate" >
                                     <input placeholder="Poids" type="number" step="any" name="weight" id="weight">
                                     <button class="waves-light btn" type="submit" name="action">Ajouter</button>
                             </form>

@@ -4,7 +4,6 @@
 <head>
     <?php
     include "../php/materializeConnexion.php";
-
     ?>
     <meta charset="UTF-8">
     <title>Index</title>
@@ -38,12 +37,14 @@
                             <h4 class="center">Pet Weight</h4>
                             <div class=" col s12 m12">
                                 <!--Formulaire de connexion-->
+
                                 <form method="post" action="../php/confirmConnexion.php">
                                     <div class="col s12 m3"></div>
                                     <div class="input-field col s6">
                                         <input placeholder="Email" id="Email" type="text" class="validate" name="Email">
                                         <input placeholder="Mot de passe" id="Password" type="password" class="validate" name="Password">
-                                        <p>Mot de passe oublié ?</p>
+                                        <?php if (isset($_GET['wrong'])){echo "<p style='color: blue'>Email ou mot de passe erroné</p>";}?>
+                                        <!-- <p>Mot de passe oublié ?</p> -->
                                         <button class="right waves-light btn" type="submit" name="action">Connexion</button>
                                     </div>
                                 </form>

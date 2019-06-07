@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: dadiesa
- * Date: 17.03.2017
- * Time: 13:52
+ * Date: 13.05.2017
+ * Time: 08:05
  */
 ?>
 <!DOCTYPE html>
@@ -44,25 +44,36 @@
                     <div class="card-content black-text">
                         <h1 class="center">Pet Weight</h1>
                         <h4 class="center">Inscription</h4>
+                        <?php
+                        if (isset($_GET['wrong'])){
+                            $GetModif = $_GET['wrong'];
+                            if ($GetModif == 1){
+                                echo "<p style='color: red'>Email déjà existant</p>";
+                            }//end if
+                            elseif($GetModif == 2){
+                                echo "<p style='color: red'>Mot de passe erroné</p>";
+                            }
+                        }
+                        ?>
                         <div class=" col s12 m12">
-                            <!--Formulaire de connexion-->
+                            <!--Formulaire de d'inscription-->
                             <form method="post" action="../php/confRegistration.php">
                                 <div class="col s12 m3"></div>
                                 <div class="input-field col s6">
                                     <div class="input-field col s6">
-                                        <input name="firstName" placeholder="Prénom" id="firstName" type="text" class="validate">
+                                        <input name="firstName" placeholder="*Prénom" id="firstName" type="text" class="validate" required>
                                     </div>
                                     <div class="input-field col s6">
                                         <input name="LastName" placeholder="Nom de famille" id="lastName" type="text" class="validate">
                                     </div>
                                     <div class="input-field col s12">
-                                        <input name="Email" placeholder="Email" id="email" type="text" class="validate">
+                                        <input name="Email" placeholder="*Email" id="email" type="text" class="validate" required>
                                     </div>
                                     <div class="input-field col s6">
-                                        <input name="Password" placeholder="Mot de passe" id="Password" type="password" class="validate">
+                                        <input name="Password" placeholder="*Mot de passe" id="Password" type="password" class="validate" required>
                                     </div>
                                     <div class="input-field col s6">
-                                        <input name="PasswordValid" placeholder="Mot de passe" id="PasswordValid" type="password" class="validate">
+                                        <input name="PasswordValid" placeholder="*Mot de passe" id="PasswordValid" type="password" class="validate" required>
                                     </div>
                                         <p>
                                             <input name="hideDeath" type="checkbox" class="filled-in" id="hideDeath"/>
@@ -72,6 +83,7 @@
                                 </div>
                             </form>
                         </div>
+
                         <a class="right-align" href="loginPage.php">Connexion</a>
                         </div>
                     </div>

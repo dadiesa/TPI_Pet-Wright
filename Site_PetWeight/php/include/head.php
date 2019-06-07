@@ -11,12 +11,11 @@ session_start();
     <script src="../javascript/javaPerso.js" type="text/javascript"></script>
 
     <meta charset="UTF-8">
-    <title>Ouvrages</title>
+    <title>Pet-Weight</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
 
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
@@ -37,3 +36,4 @@ session_start();
 </head>
 
 <body>
+

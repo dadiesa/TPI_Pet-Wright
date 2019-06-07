@@ -5,7 +5,6 @@ include('../php/include/head.php');
 include "../php/connexionPDO.php";
 include "../php/RequestSQL.php";
 
-
 $allRequest = new RequestSQL();
 $getUser = $allRequest->getUser($_SESSION['Pseudo']);
 
@@ -21,37 +20,50 @@ $data = $NewCo->executeQuerySelect($getUser);
         $Email = $line['useEmail'];
         $Firstname = $line['useFirstName'];
         $Lastname = $line['useLastName'];
+        $HideDeath = $line['useHideDeath'];
         }//end foreach
         ?>
     <div class="row">
-            <div class="input-field col s3"></div>
+            <div class="input-field col s5"></div>
             <div class="input-field col s6">
+                    <h1>Mon Compte</h1>
                     <b class="left-align"><?php echo $Email;?></b>
                     <p><?php echo "Prénom : ".$Firstname;?></p>
                     <p><?php echo "Nom de famille : ".$Lastname;?></p>
                     <b class="left-align">Changer de mot de passe</b><br>
-                    <div class="col s6">
-                        <br>Mot de passe actuel:
-                        <div class="input-field inline">
-                            <input id="ActuPwd" type="password">
+                    <form method="post" action="../php/confModifUser.php">
+                        <div class="col s12">
+                            <br>Mot de passe actuel:
+                            <div class="input-field inline">
+                                <input id="ActuPwd" name="ActuPwd" type="password">
+                            </div>
+                            <br>Nouveau mot de passe:
+                            <div class="input-field inline">
+                                <input id="newPwd" name="newPwd" type="password">
+                            </div>
+                            <br>Confirmer le mode de passe:
+                            <div class="input-field inline">
+                                <input id="confPwd" name="confPwd" type="password">
+                            </div>
+                                <p>
+                                    <input type="checkbox" class="filled-in" name="hideDeath" id="hideDeath" <?php if ($HideDeath == '0') echo "checked"; ?>/>
+                                    <label for="hideDeath">Voir les animaux décédés</label>
+                                </p>
+                            <br>
+                            <button>Sauvegarder les<br> modifications</button>
+                            <?php
+                            if (isset($_GET['modif'])){
+                            $GetModif = $_GET['modif'];
+                                if ($GetModif == 1){
+                                    echo "<p>Modification(s) effectuée(s)</p>";
+                                }
+                                elseif ($GetModif == 2){
+                                    echo "<p style='color: blue'>Mot de passe incorrecte</p>";
+                                }
+                            }
+                            ?>
                         </div>
-                        <br>Nouveau mot de passe:
-                        <div class="input-field inline">
-                            <input id="newPwd" type="password">
-                        </div>
-                        Confirmer le mode de passe:
-                        <div class="input-field inline">
-                            <input id="confPwd" type="password">
-                        </div>
-                        <form action="#">
-                            <p>
-                                <input type="checkbox" class="filled-in" id="filled-in-box"/>
-                                <label for="filled-in-box">Voir le décès des animaux</label>
-                            </p>
-                        </form>
-                        <br>
-                        <button>Sauvegarder les<br> modifications</button>
-                    </div>
+                    </form>
             </div>
         </div>
     </div>

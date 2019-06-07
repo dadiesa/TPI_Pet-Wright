@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  ven. 17 mai 2019 à 16:21
+-- Généré le :  ven. 07 juin 2019 à 10:03
 -- Version du serveur :  5.7.17
 -- Version de PHP :  7.1.3
 
@@ -21,6 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Base de données :  `db_petweight`
 --
+CREATE DATABASE IF NOT EXISTS `db_petweight` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `db_petweight`;
 
 -- --------------------------------------------------------
 
@@ -38,16 +40,16 @@ CREATE TABLE `t_pet` (
   `petPicture` varchar(100) DEFAULT NULL,
   `idUser` int(11) NOT NULL,
   `idPetType` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 --
 -- Déchargement des données de la table `t_pet`
 --
 
 INSERT INTO `t_pet` (`idPet`, `petName`, `petBirthDay`, `petDeath`, `petMicroChip`, `petDesc`, `petPicture`, `idUser`, `idPetType`) VALUES
-(1, 'Rex', '01-04-2018', '2019-03-20', NULL, 'C\'est le chien du clone', 'rox.jpg', 1, 1),
-(2, 'Garfield', '05.03.2018', NULL, NULL, NULL, 'Garfield.jpg', 1, 2),
-(3, 'Rox', '05.05.2017', NULL, NULL, NULL, 'rox.jpg', 1, 1);
+(1, 'Rex', '2018-04-01', NULL, 1234567, '', 'Garfield.jpg', 1, 1),
+(2, 'Garfield', '2018-03-05', NULL, NULL, '', 'Garfield.jpg', 1, 2),
+(3, 'Rox', '2017-05-05', NULL, NULL, '', 'rox.jpg', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -78,18 +80,21 @@ CREATE TABLE `t_user` (
   `idUser` int(11) NOT NULL,
   `useFirstName` varchar(50) NOT NULL,
   `useLastName` varchar(50) NOT NULL,
-  `useEmail` varchar(100) NOT NULL,
-  `usePassword` varchar(100) NOT NULL,
+  `useEmail` varchar(255) NOT NULL,
+  `usePassword` varchar(255) NOT NULL,
   `useHideDeath` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 --
 -- Déchargement des données de la table `t_user`
 --
 
 INSERT INTO `t_user` (`idUser`, `useFirstName`, `useLastName`, `useEmail`, `usePassword`, `useHideDeath`) VALUES
-(1, 'Samuel', 'Dadié', 'samuel.dadie@gmail.com', '$2y$10$xYG5UYCm3Z2E/3.yqJzydO7U6jgmOLIgDVr5vuvU9Px98xUKeefIu', 0),
-(3, 'premier', 'testeur', 'premier.testeur@gmail.com', '$2y$10$IOOfdBEDcjSaMXHAk5Np4O.JdmwMtj4Rq6KiqxI71qowWedQ./0U.', 0);
+(1, 'Samuel', 'Dadié', 'samuel.dadie@gmail.com', '$2y$10$AMNBaYhtco73AQWrA4z9WeW61fRrRKwGBeTtyOx2ZRzwRReCBk8.i', 0),
+(3, 'premier', 'testeur', 'premier.testeur@gmail.com', '$2y$10$IOOfdBEDcjSaMXHAk5Np4O.JdmwMtj4Rq6KiqxI71qowWedQ./0U.', 0),
+(4, 'Cindy', 'Hardegger', 'cindy.hardegger@vd.educanet2.ch', '$2y$10$8GDIxfOmKmiNNDMLuCkNL.pT2MqMo8pt44ncXDNzSWqcpG5pul7By', 1),
+(5, 'Alain', 'Roy', 'alain.roy@vd.oai.ch', '$2y$10$MPYPghNDP0PJSAuG8lZQYuhogzOqEdQq0r0WgYyDh//ZGmkxCeAze', 0),
+(6, 'Nicolas', 'Glassey', 'nicolas.glassey@cpnv.ch', '$2y$10$DtdoRRN8cCbcOvo6yR3up.EujktvTqyNQK/L2oMDTIvmt240wpfBy', 0);
 
 -- --------------------------------------------------------
 
@@ -112,11 +117,16 @@ INSERT INTO `t_weightpet` (`idPetWeight`, `weiWeight`, `weiDate`, `idPet`) VALUE
 (1, 8, '2018-06-21', 1),
 (2, 9, '2018-07-21', 1),
 (3, 7, '2018-08-21', 1),
-(4, 4.5, '2018-04-28', 2),
+(4, 9, '2018-04-28', 2),
 (5, 2.5, '2019-05-06', 3),
-(6, 5, '2019-05-14', 2),
-(7, 4.7, '2019-06-14', 2),
-(8, 8, '2019-07-12', 2);
+(6, 12, '2019-05-14', 2),
+(7, 16.5, '2019-06-14', 2),
+(8, 20, '2019-07-12', 2),
+(9, 26, '2019-08-14', 2),
+(10, 10, '2019-09-14', 2),
+(11, 6.3, '2019-05-18', 2),
+(12, 7.9, '2019-05-29', 3),
+(13, 0, '2019-05-30', 3);
 
 --
 -- Index pour les tables déchargées
@@ -167,12 +177,12 @@ ALTER TABLE `t_typepet`
 -- AUTO_INCREMENT pour la table `t_user`
 --
 ALTER TABLE `t_user`
-  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT pour la table `t_weightpet`
 --
 ALTER TABLE `t_weightpet`
-  MODIFY `idPetWeight` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `idPetWeight` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- Contraintes pour les tables déchargées
 --

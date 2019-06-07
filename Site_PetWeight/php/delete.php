@@ -7,8 +7,8 @@
  */
 
 session_start();
-//Récupération de l'id teacher
-$idBook = $_GET['id'];
+//Récupération de l'id
+$idPet = $_GET['id'];
 
 //Inclus le PDOLink
 include 'connexionPDO.php';
@@ -17,14 +17,12 @@ include 'connexionPDO.php';
 //Crée un objet venant de la classe PDOLink
 $PDO = new connexionPDO();
 //Stock la requete
-$query = "DELETE FROM t_book WHERE idBook =$idBook";
+$query = "DELETE FROM t_pet WHERE idPet =$idPet";
 
 echo $query;
 
-//Execute la requête de $query et stock le résultat dnas $req
+//Execute la requête de $query et stock le résultat dans $req
 $req = $PDO->executeQuerySelect($query);
-
-//include 'navbar.php';
 
 ?>
     <head>
@@ -33,7 +31,6 @@ $req = $PDO->executeQuerySelect($query);
 
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="../materialize/css/cssPerso.css" rel="stylesheet">
-
 
         <!-- Compiled and minified CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
@@ -59,14 +56,12 @@ $req = $PDO->executeQuerySelect($query);
         ?>
 
         <main>
-	    	<h1 style='text-align: center'>Livre Supprimer</h1>
-
 	    	<section>
 	    	</section>
                 <?php
-                include '../php/footer.php';
+                include '../php/include/footer.php';
 
-                header('Location:../Pages/ShowBook.php');
+                header('Location:../Pages/PetsList.php');
 
                 ?>
         </main>

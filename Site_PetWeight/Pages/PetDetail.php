@@ -4,7 +4,7 @@ include('../php/include/head.php');
 /**
  * Created by PhpStorm.
  * User: dadiesa
- * Date: 17.03.2017
+ * Date: 13.05.2019
  * Time: 15:53
  */
 
@@ -24,7 +24,6 @@ $getUser = $allRequest->getUser($_SESSION['Pseudo']);
 
 $getdata = $exeRequest->executeQuerySelect($getPetDetail);
 $HideDeath = $exeRequest->executeQuerySelect($getUser);
-
 ?>
     <main>
         <?php
@@ -36,22 +35,27 @@ $HideDeath = $exeRequest->executeQuerySelect($getUser);
             $petBirthDay = $line['petbirthDay'];
             $petDesc = $line['petDesc'];
             $petDeath = $line['petDeath'];
+            $petShip = $line['petMicroChip'];
             $LastWeight = $line['weiWeight'];
             $picture = $line['petPicture'];
         }//end foreach
 
-
         foreach ($HideDeath as $line){
             $hideDeath = $line['useHideDeath'];
         }
-
         ?>
     <div class="row">
         <div class="center-align input-field col s6">
             <b class="left-align"><?php echo $petName; ?></b>
-            <p><?php echo $petBirthDay; if ($hideDeath == 0 && $petDeath != ""){ echo " / ".$petDeath; }?></p>
-            <p>Numéro de puce</p>
-            <p>Dernier poids : <?php echo $LastWeight ?></p>
+            <p><?php echo $petBirthDay; if ($petDeath != ""){ echo " / ".$petDeath; }?></p>
+            <?php
+            if ($petShip != "")
+                {echo "<p>Numéro de puce : $petShip </p>";}
+            ?>
+            <?php
+            if ($LastWeight != "")
+                {echo "<p>Dernier poids : $LastWeight </p>";}
+            ?>
             <p><?php echo $petDesc; ?></p>
         </div>
         <div class="input-field col s6">
@@ -59,7 +63,9 @@ $HideDeath = $exeRequest->executeQuerySelect($getUser);
         </div>
     </div>
     <div class="row">
-        <div class="col s2 m3"></div>
+        <div class="right-align col s2 m3">
+            <a href="PetsList.php" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons ">arrow_back</i></a>
+        </div>
         <div class="center-align input-field col s6">
             <?php
             //récupère la request afin d'avoir les donnée du tableau
@@ -83,10 +89,12 @@ $HideDeath = $exeRequest->executeQuerySelect($getUser);
                 $date = $getgraficData[$i]['weiDate'];
                 $dates = $dates."'".$date."',";
             }
-           $dates = $dates."'".$getgraficData[$arrayLength]['weiDate']."'";
+            if ($dates != ""){
+            $dates = $dates."'".$getgraficData[$arrayLength]['weiDate']."'";}
             ?>
-
-            <canvas style="height:75vh;width:74vw" id="myChart"></canvas>
+            <div class="chart-container" style="position: relative; height:35vh; width:40vw">
+                <canvas id="myChart"></canvas>
+            </div>
             <script>
                 var ctx = document.getElementById('myChart');
                 var myChart = new Chart(ctx, {
@@ -104,12 +112,17 @@ $HideDeath = $exeRequest->executeQuerySelect($getUser);
                         },
                         options: {
                             responsive: true,
+                            maintainAspectRatio: false,
                             scales: {
                                 yAxes: [{
-                                    ticks:{
-                                        min: 0,
-                                        max: 10,
-                                        stepSize: 1
+                                    stacked: true,
+                                    gridLines: {
+                                        display: true,
+                                    }
+                                }],
+                                xAxes: [{
+                                    gridLines: {
+                                        display: false
                                     }
                                 }]
                             }
@@ -117,6 +130,9 @@ $HideDeath = $exeRequest->executeQuerySelect($getUser);
                     }
                 );
             </script>
+
+            <?php
+            echo "<a href='../php/delete.php?id=$petId' class='waves-light btn red' onClick=\"javascript: return confirm('Voulez-vous supprimer votre animal de compagnie');\">Supprimer l'animal</a>" ?>
         </div>
     </div>
     </main>

@@ -13,14 +13,8 @@ $addWeight = "INSERT INTO `t_weightpet` (`idPetWeight`, `weiWeight`, `weiDate`, 
 
 $insert = $co->executeQuerySelect($addWeight);
 
-//Appel de la classs pour le PDO
-
-
-
 ?>
-
 <main>
-
 
 </main>
 <?php

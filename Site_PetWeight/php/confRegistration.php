@@ -15,9 +15,7 @@ $pwdCheck = $_POST['PasswordValid'];
 if (isset($_POST['hideDeath'])){ $hideDeath = "0";}
 else $hideDeath = "1";
 
-
 if($pwd == $pwdCheck) {
-
     $pwdHash = password_hash($_POST['Password'], PASSWORD_DEFAULT);
 }
 else
@@ -38,7 +36,6 @@ echo $insert;
 <html>
 <!--Liens avec Materialize-->
 <head>
-
     <meta charset="UTF-8">
     <title>Index</title>
 
@@ -67,9 +64,8 @@ echo $insert;
 
     <?php
     //inclue la navbar de façon dynamiques
-    include '../php/navbar.php';
+    include '../php/include/navbar.php';
     ?>
-
 
     <!--Site description-->
     <div class="row">
@@ -83,20 +79,24 @@ echo $insert;
                     //Vérifie si l'utilisateur existe déjà
                     if($Email == $users['useEmail'])
                     {
+                        echo "ddd";
                         $userexist = true;
                         echo "<h4>Cet email est déja utilisé. Veuillez en choisir un autre</h4>";
-                        break;
+                        header("Location: ../Pages/registration.php?wrong=1");
+                        //break;
                     }
                 }
                 //Si l'utilisateur existe pas il est créé
                 if ($userexist == false){
                         echo "<h4>L'utilisateur " . $firstName . " à bien été créé</h4>";
                         $co->executeQuery($insert);
-                        header("Location: ../Pages/myPets.php");
+                    session_start();
+                    $_SESSION['Pseudo'] = $firstName;
+                        header("Location: ../Pages/PetsList.php");
                 }
             }
             else{
-
+                header("Location: ../Pages/registration.php?wrong=2");
             }
             ?>
         </div>
@@ -104,7 +104,7 @@ echo $insert;
 </main>
 <?php
 //Footer
-include '../php/footer.php'
+include '../php/include/footer.php'
 ?>
 </body>
 </html>

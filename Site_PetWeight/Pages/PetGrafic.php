@@ -10,7 +10,6 @@ $allRequest = new RequestSQL();
 ?>
 
 <main>
-    <div class="header-fixed">
     <?php
     //Affiche le menu de navigation
     include '../php/include/navbar.php';
@@ -33,7 +32,8 @@ $allRequest = new RequestSQL();
                 $getPetWeight = "SELECT weiWeight,weiDate,petName
                                  FROM t_weightpet 
                                  INNER JOIN t_pet ON t_weightpet.idPet = t_pet.idPet
-                                 WHERE t_pet.idPet = $idPet";
+                                 WHERE t_pet.idPet = $idPet
+                                 ORDER BY weiDate ASC";
 
                 $getgraficData = $DBco->executeQuerySelect($getPetWeight);
 
@@ -53,52 +53,60 @@ $allRequest = new RequestSQL();
                     $date = $getgraficData[$i]['weiDate'];
                     $dates = $dates."'".$date."',";
                 }
-                $dates = $dates."'".$getgraficData[$arrayLength]['weiDate']."'";
-
-                echo "<h5 class='center-align'>".$PetName."</h5>";
+                if ($dates != "") {
+                    $dates = $dates . "'" . $getgraficData[$arrayLength]['weiDate'] . "'";
+                }
                 ?>
-                <canvas style="height:75vh;width:74vw" id="<?php echo $PetName; ?>"></canvas>
-                <script>
-                    var ctx = document.getElementById('<?php echo $PetName; ?>');
-                    var myChart = new Chart(ctx, {
-                            type: 'line',
-                            data: {
-                                labels:[<?php echo $dates; ?>],
-                                datasets: [{
-                                    //First Data
-                                    label: '',
-                                    data: [<?php echo $allPetWeight; ?>],
-                                    borderColor: 'rgb(0,0,0)',
-                                    pointBackgroundColor: 'rgb(0,0,0)',
-                                    backgroundColor: 'transparent',
-                                },]
-                            },
-                            options: {
-                                responsive: true,
-                                scales: {
-                                    yAxes: [{
-                                        ticks:{
-                                            min: 0,
-                                            max: 10,
-                                            stepSize: 1
-                                        }
-                                    }]
+
+                <?php echo "<h5 class='center-align'>".$PetName."</h5>"; ?>
+                <div class="chart-container" style="position: relative; height:35vh; width:40vw ">
+                    <canvas id="<?php echo $PetName; ?>"></canvas>
+                </div>
+                    <script>
+                        var ctx = document.getElementById('<?php echo $PetName; ?>');
+                        var myChart = new Chart(ctx, {
+                                type: 'line',
+                                data: {
+                                    labels:[<?php echo $dates; ?>],
+                                    datasets: [{
+                                        //First Data
+                                        label: '',
+                                        data: [<?php echo $allPetWeight; ?>],
+                                        borderColor: 'rgb(0,0,0)',
+                                        pointBackgroundColor: 'rgb(0,0,0)',
+                                        backgroundColor: 'transparent',
+                                    },]
+                                },
+                                options: {
+                                    responsive: true,
+                                    maintainAspectRatio: false,
+                                    scales: {
+                                        yAxes: [{
+                                            stacked: true,
+                                            gridLines: {
+                                                display: true,
+                                            }
+                                        }],
+                                        xAxes: [{
+                                            gridLines: {
+                                                display: false
+                                            }
+                                        }]
+                                    }
                                 }
                             }
-                        }
-                    );
-                </script>
+                        );
+                    </script>
             <?php
             }//end foreach
             ?>
-
         </div>
     </div>
 </main>
-<div class="footer-fixed">
+    <div class="footer-fixed">
     <?php
     //inclut le footer pour ne pas le répéter sur tous les fichiers
     include '../php/include/footer.php';
     ?>
-</div>
+    </div>
 </html>
